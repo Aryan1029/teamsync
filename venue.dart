@@ -1,11 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:teamsync/Screens/LoginScreen.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:http/http.dart' as http;
 
 class venue extends StatefulWidget {
   const venue({super.key});
@@ -19,6 +19,37 @@ class _venueState extends State<venue> {
   TextEditingController pass=TextEditingController();
   String chk_err="";
   String data = '';
+  String venueData = '';
+  String venueName = '';
+  String venueDate = '';
+  String venueTime = '';
+  String venueURL = '';
+  Future<void> fetchData() async {
+    final response = await http.get(Uri.parse('http://192.168.94.234:3019/fetch_venue_details'));
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      setState(() {
+        venueData = response.body;
+        print(response.body);
+        venueName = jsonResponse[0]['venue_name'];
+        final date = DateTime.parse(jsonResponse[0]['date']);
+        venueDate = DateFormat('dd-MM-yyyy').format(date);
+        venueTime = jsonResponse[0]['time'];
+        venueURL = jsonResponse[0]['venue'];
+      });
+
+    } else {
+      setState(() {
+        venueData = 'Failed to fetch data.';
+      });
+    }
+  }
+  @override
+  void initState(){
+    super.initState();
+    fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +66,7 @@ class _venueState extends State<venue> {
               child: Container(
                 width: 400,
 
-                margin: EdgeInsets.fromLTRB(11, 0, 0, 0),
+                margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
                 child: const Text(
                   'Venue & Timing',
                   style: TextStyle(
@@ -66,14 +97,14 @@ class _venueState extends State<venue> {
               child: Column(
                 children: [
                   QrImageView(
-                    data: 'https://maps.app.goo.gl/3C6qQp9dh6MUAkdN6',
+                    data: '${venueURL}',
                     backgroundColor: Colors.white,
                     version: QrVersions.auto,
                     size: 300.0,
                   ),
-                  Text('Report at the above venue on 21st October at 10pm',
+                  Text('Report at ${venueName}  on ${venueDate} at ${venueTime}',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Raleway',
                         fontSize: 16,
@@ -81,7 +112,7 @@ class _venueState extends State<venue> {
                   ),
                   GestureDetector(
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       width: 250,
                       decoration: BoxDecoration(
                         color: Colors.black26,
@@ -105,7 +136,7 @@ class _venueState extends State<venue> {
                     ),
                     onTap: () {
                       launchUrlString(
-                          'https://maps.app.goo.gl/3C6qQp9dh6MUAkdN6');
+                          '${venueURL}');
                     },
                   ),
                   // ElevatedButton(onPressed: (){ print('boom');}, child: Text('Tester'))
@@ -117,4 +148,6 @@ class _venueState extends State<venue> {
       ),
     );
   }
+
+
 }

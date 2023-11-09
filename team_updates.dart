@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:teamsync/Screens/venue.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class team_updates extends StatefulWidget {
@@ -61,7 +59,7 @@ class _team_updatesState extends State<team_updates> {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: const Text(
                       'Team Updates',
                       style: TextStyle(
@@ -73,7 +71,7 @@ class _team_updatesState extends State<team_updates> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     child: const Text(
                       'Stay on your toes lad',
                       style: TextStyle(
@@ -128,7 +126,7 @@ class _team_updatesState extends State<team_updates> {
                       children: [
                         if (isAdded)
                           Padding(
-                            padding: const EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(12),
                             child: Text(
                               "⚽You have been added to Team : ${widget.player['team']}",
                               style: const TextStyle(
@@ -141,10 +139,10 @@ class _team_updatesState extends State<team_updates> {
                             ),
                           )
                         else
-                          SizedBox.shrink(),
+                          const SizedBox.shrink(),
                         if (isSelected)
                           Container(
-                            margin: EdgeInsets.all(10),
+                            margin: const EdgeInsets.all(10),
                             child: Column(children: [
                               const Text(
                                 "⚽Congratulations you have been selected in the team.",
@@ -158,7 +156,7 @@ class _team_updatesState extends State<team_updates> {
                               ),
                               GestureDetector(
                                 child: Container(
-                                  margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                  margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                   width: 450,
                                   decoration: BoxDecoration(
                                     color: Colors.black26,

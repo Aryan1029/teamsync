@@ -25,11 +25,12 @@ class _updatesState extends State<updates> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           bottom: PreferredSize(
+              preferredSize: const Size(100, 125),
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Text(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: const Text(
                       'Up-to-Date',
                       style: TextStyle(
                         color: Colors.white,
@@ -40,8 +41,8 @@ class _updatesState extends State<updates> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Text(
+                    margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: const Text(
                       'kick off!',
                       style: TextStyle(
                         color: Colors.white70,
@@ -52,8 +53,7 @@ class _updatesState extends State<updates> {
                     ),
                   ),
                 ],
-              ),
-              preferredSize: const Size(100, 125)),
+              )),
           backgroundColor: Colors.blue.shade700,
           elevation: 0.0,
         ),
@@ -99,14 +99,14 @@ class _updatesState extends State<updates> {
                             Navigator.push(
                               context,
                               PageTransition(
-                                child: venue(),
+                                child: const venue(),
                                 type: PageTransitionType.fade,
                               ),
                             );
                           },
                           child: Center(
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 80, 0, 20),
+                              margin: const EdgeInsets.fromLTRB(0, 80, 0, 20),
                               height: 50,
                               width: 280,
                               decoration: BoxDecoration(
